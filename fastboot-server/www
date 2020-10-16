@@ -1,0 +1,21 @@
+#!/usr/bin/env node
+
+'use strict';
+
+const path = require('path');
+
+const ClusterMaster = require('ember-alt-fastboot-app-server/src/backing-classes/cluster-master');
+
+const config = {
+  distPath: path.join(__dirname, '../'),
+  host: '0.0.0.0',
+  port: '4200',
+  workerCount: 1,
+  sandboxGlobals: {
+    process
+  }
+};
+
+const master = new ClusterMaster(config);
+
+master.start();
