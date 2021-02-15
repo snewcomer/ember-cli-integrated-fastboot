@@ -13,9 +13,9 @@ function configureFingerprints(host) {
 }
 
 function configureUglify(host) {
-  host.options['ember-cli-uglify'] = host.options['ember-cli-uglify'] || {};
-  host.options['ember-cli-uglify'].exclude = host.options['ember-cli-uglify'].exclude || [];
-  host.options['ember-cli-uglify'].exclude.push('node_modules/**/*');
+  host.options['ember-cli-terser'] = host.options['ember-cli-terser'] || {};
+  host.options['ember-cli-terser'].exclude = host.options['ember-cli-terser'].exclude || [];
+  host.options['ember-cli-terser'].exclude.push('node_modules/**/*');
 }
 
 module.exports = {
