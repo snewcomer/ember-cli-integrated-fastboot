@@ -15,7 +15,7 @@ function configureFingerprints(host) {
   );
 }
 
-function configureUglify(host) {
+function configureTerser(host) {
   host.options['ember-cli-terser'] = host.options['ember-cli-terser'] || {};
   host.options['ember-cli-terser'].exclude =
     host.options['ember-cli-terser'].exclude || [];
@@ -55,7 +55,7 @@ module.exports = {
     this._super.included.apply(this, arguments);
     const host = addon._findHost ? addon._findHost() : addon;
     configureFingerprints(host);
-    configureUglify(host);
+    configureTerser(host);
   },
 
   /**
