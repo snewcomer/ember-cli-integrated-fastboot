@@ -52,6 +52,7 @@ module.exports = {
   },
 
   included(addon) {
+    this._super.included.apply(this, arguments);
     const host = addon._findHost ? addon._findHost() : addon;
     configureFingerprints(host);
     configureUglify(host);

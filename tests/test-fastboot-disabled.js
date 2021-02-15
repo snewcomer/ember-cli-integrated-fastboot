@@ -3,7 +3,9 @@ const { spawn } = require('child_process');
 const http = require('http');
 
 const newEnv = { ...process.env, FASTBOOT_DISABLED: 'true' };
-const server = spawn('ember', ['s'], { env: newEnv });
+const server = spawn('ember', ['s', '--environment=production'], {
+  env: newEnv,
+});
 
 process.stdout.write(
   '## waiting for server to start ' +
