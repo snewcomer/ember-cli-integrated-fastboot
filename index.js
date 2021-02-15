@@ -9,12 +9,16 @@ const merge = require('broccoli-merge-trees');
 function configureFingerprints(host) {
   host.options.fingerprint = host.options.fingerprint || {};
   host.options.fingerprint.exclude = host.options.fingerprint.exclude || [];
-  host.options.fingerprint.exclude.push('**/assets/chunk.*.js', 'fastboot-server/**/*');
+  host.options.fingerprint.exclude.push(
+    '**/assets/chunk.*.js',
+    'fastboot-server/**/*'
+  );
 }
 
 function configureUglify(host) {
   host.options['ember-cli-terser'] = host.options['ember-cli-terser'] || {};
-  host.options['ember-cli-terser'].exclude = host.options['ember-cli-terser'].exclude || [];
+  host.options['ember-cli-terser'].exclude =
+    host.options['ember-cli-terser'].exclude || [];
   host.options['ember-cli-terser'].exclude.push('node_modules/**/*');
 }
 
@@ -66,7 +70,7 @@ module.exports = {
    * @param {String} type
    * @param {Object} config
    */
-  contentFor: function(type, config) {
+  contentFor: function (type, config) {
     if (config.environment !== 'production' && type === 'head') {
       return '<script type="text/javascript" src="/livereload.js"></script>';
     }
@@ -80,7 +84,9 @@ module.exports = {
    */
   treeForFastBootServer(tree) {
     const fastbootServer = funnel(path.join(__dirname, 'fastboot-server'));
-    const reduced = merge([tree, fastbootServer].filter(Boolean), { overwrite: true });
+    const reduced = merge([tree, fastbootServer].filter(Boolean), {
+      overwrite: true,
+    });
     return reduced;
   },
 
@@ -93,7 +99,7 @@ module.exports = {
       }
     });
 
-     // Get the project's fastboot-server directory last.
+    // Get the project's fastboot-server directory last.
     const fastbootServerPath = path.join(this.project.root, 'fastboot-server');
 
     let fastbootServer = null;
@@ -101,10 +107,13 @@ module.exports = {
       fastbootServer = funnel(fastbootServerPath);
     }
 
-     return funnel(merge([tree, fastbootServer].filter(Boolean), { overwrite: true }), { destDir: 'fastboot-server' });
+    return funnel(
+      merge([tree, fastbootServer].filter(Boolean), { overwrite: true }),
+      { destDir: 'fastboot-server' }
+    );
   },
 
-   // Update the manifest to serve assets from the `webroot` folder instead.
+  // Update the manifest to serve assets from the `webroot` folder instead.
   updateFastBootManifest(manifest) {
     const categories = Object.keys(manifest);
     categories.forEach((category) => {
@@ -117,20 +126,26 @@ module.exports = {
       }
     });
 
-     return manifest;
+    return manifest;
   },
 
   postprocessTree(type, tree) {
     if (type === 'all') {
-      const webroot = funnel(tree, { srcDir: '.', destDir: 'webroot', exclude: ['package.json'] });
-      const root = funnel(tree, {files:['package.json']})
-      return merge([root, webroot, this._treeForFastBootServer()].filter(Boolean));
+      const webroot = funnel(tree, {
+        srcDir: '.',
+        destDir: 'webroot',
+        exclude: ['package.json'],
+      });
+      const root = funnel(tree, { files: ['package.json'] });
+      return merge(
+        [root, webroot, this._treeForFastBootServer()].filter(Boolean)
+      );
     }
 
-     return tree;
+    return tree;
   },
 
   includedCommands() {
     return require(path.join(__dirname, 'lib/commands'));
-  }
+  },
 };
