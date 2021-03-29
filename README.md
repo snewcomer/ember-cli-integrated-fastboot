@@ -58,7 +58,7 @@ You can provide your own `fastboot-server` folder at the root of your project.  
 |   └── middlewares
 ```
 
- The FastBoot instance runs in a [Node vm](https://nodejs.org/api/vm.html) to avoid leaking state to other instances. If any code uses Node globals, you need to provide your own `www` and include them with `sandboxGlobals`. `process` is provided with the default `www` file [here]().
+ The FastBoot instance runs in a [Node vm](https://nodejs.org/api/vm.html) to avoid leaking state to other instances. If any code uses Node globals, you need to provide your own `www` and include them with `buildSandboxGlobals` function. `process` is provided with the default `www` file [here]().
 
 
 ## Order of Operations

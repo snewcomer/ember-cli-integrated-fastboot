@@ -11,8 +11,10 @@ const config = {
   host: '0.0.0.0',
   port: '4200',
   workerCount: 1,
-  sandboxGlobals: {
-    process
+  buildSandboxGlobals(globals) {
+    return Object.assign({}, globals, {
+      process
+    });
   }
 };
 

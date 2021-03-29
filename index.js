@@ -12,10 +12,10 @@ function configureFingerprints(host) {
   host.options.fingerprint.exclude.push('**/assets/chunk.*.js', 'fastboot-server/**/*');
 }
 
-function configureUglify(host) {
-  host.options['ember-cli-uglify'] = host.options['ember-cli-uglify'] || {};
-  host.options['ember-cli-uglify'].exclude = host.options['ember-cli-uglify'].exclude || [];
-  host.options['ember-cli-uglify'].exclude.push('node_modules/**/*');
+function configureTerser(host) {
+  host.options['ember-cli-terser'] = host.options['ember-cli-terser'] || {};
+  host.options['ember-cli-terser'].exclude = host.options['ember-cli-terser'].exclude || [];
+  host.options['ember-cli-terser'].exclude.push('node_modules/**/*');
 }
 
 module.exports = {
@@ -50,7 +50,7 @@ module.exports = {
   included(addon) {
     const host = addon._findHost ? addon._findHost() : addon;
     configureFingerprints(host);
-    configureUglify(host);
+    configureTerser(host);
   },
 
   /**
