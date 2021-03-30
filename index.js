@@ -93,7 +93,12 @@ module.exports = {
       }
     });
 
-     // Get the project's fastboot-server directory last.
+    // Get the project's fastboot-server directory last. The following files may be included in dist/fastboot-server
+    // ├── app
+    // ├── fastboot-server
+    // |   ├── www
+    // |   └── cluster-worker.js
+    // |   └── middlewares
     const fastbootServerPath = path.join(this.project.root, 'fastboot-server');
 
     let fastbootServer = null;
@@ -122,8 +127,14 @@ module.exports = {
 
   postprocessTree(type, tree) {
     if (type === 'all') {
+      // this is the tree after the build
+      // We need to move files so `dist` looks like...
+      // - dist
+      //     - fastboot-server
+      //     - webroot
+      //   - package.json
       const webroot = funnel(tree, { srcDir: '.', destDir: 'webroot', exclude: ['package.json'] });
-      const root = funnel(tree, {files:['package.json']})
+      const root = funnel(tree, { files:['package.json'] })
       return merge([root, webroot, this._treeForFastBootServer()].filter(Boolean));
     }
 
