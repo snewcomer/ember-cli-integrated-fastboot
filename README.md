@@ -1,5 +1,7 @@
 # ember-cli-integrated-fastboot
 
+[Example fastboot-v2 repo](https://github.com/snewcomer/ember-fastboot-v2-example)
+
 This ember-cli addon enables using a production FastBoot server during development. This ensures that the eventual environment that you will run your application in will be consistent.
 
 ## Overview
@@ -37,7 +39,7 @@ Specify custom start scripts for your application in a root level `scripts` fold
 
 Here are some other package.json scripts that are useful.  The `postbuild` command is important b/c the eventual dist that needs to be shipped to the server should have the node_modules installed alongside.
 
-- `"prebuild": "rm -rf ./dist ./tmp"`
+- `"prebuild": "rm -rf ./dist"`
 - `"postbuild": "cd ./dist && npm install"`
 
 ## Disabling FastBoot

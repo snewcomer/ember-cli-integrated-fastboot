@@ -23,7 +23,7 @@ module.exports = {
 
   /**
    * When running tests in testem, redirect requests to new webroot relative path
-   * @param {ExpressApplication} app - Express application run by testem
+   * @param {FastifyApplication} app - Fastify application run by testem
    */
   testemMiddleware(app) {
     // redirect /tests/index.html to /webroot/tests/index.html
