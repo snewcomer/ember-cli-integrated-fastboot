@@ -10,9 +10,11 @@ const config = {
   distPath: path.join(__dirname, '../'),
   host: '0.0.0.0',
   port: '4200',
-  workerCount: 1,
-  sandboxGlobals: {
-    process
+  workerCount: 1, // configurable
+  buildSandboxGlobals(globals) {
+    return Object.assign({}, globals, {
+      process
+    });
   }
 };
 

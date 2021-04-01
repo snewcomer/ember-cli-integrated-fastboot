@@ -12,10 +12,10 @@ function configureFingerprints(host) {
   host.options.fingerprint.exclude.push('**/assets/chunk.*.js', 'fastboot-server/**/*');
 }
 
-function configureUglify(host) {
-  host.options['ember-cli-uglify'] = host.options['ember-cli-uglify'] || {};
-  host.options['ember-cli-uglify'].exclude = host.options['ember-cli-uglify'].exclude || [];
-  host.options['ember-cli-uglify'].exclude.push('node_modules/**/*');
+function configureTerser(host) {
+  host.options['ember-cli-terser'] = host.options['ember-cli-terser'] || {};
+  host.options['ember-cli-terser'].exclude = host.options['ember-cli-terser'].exclude || [];
+  host.options['ember-cli-terser'].exclude.push('node_modules/**/*');
 }
 
 module.exports = {
@@ -23,7 +23,7 @@ module.exports = {
 
   /**
    * When running tests in testem, redirect requests to new webroot relative path
-   * @param {ExpressApplication} app - Express application run by testem
+   * @param {FastifyApplication} app - Fastify application run by testem
    */
   testemMiddleware(app) {
     // redirect /tests/index.html to /webroot/tests/index.html
@@ -50,7 +50,7 @@ module.exports = {
   included(addon) {
     const host = addon._findHost ? addon._findHost() : addon;
     configureFingerprints(host);
-    configureUglify(host);
+    configureTerser(host);
   },
 
   /**
@@ -93,7 +93,12 @@ module.exports = {
       }
     });
 
-     // Get the project's fastboot-server directory last.
+    // Get the project's fastboot-server directory last. The following files may be included in dist/fastboot-server
+    // ├── app
+    // ├── fastboot-server
+    // |   ├── www
+    // |   └── cluster-worker.js
+    // |   └── middlewares
     const fastbootServerPath = path.join(this.project.root, 'fastboot-server');
 
     let fastbootServer = null;
@@ -122,8 +127,14 @@ module.exports = {
 
   postprocessTree(type, tree) {
     if (type === 'all') {
+      // this is the tree after the build
+      // We need to move files so `dist` looks like...
+      // - dist
+      //     - fastboot-server
+      //     - webroot
+      //   - package.json
       const webroot = funnel(tree, { srcDir: '.', destDir: 'webroot', exclude: ['package.json'] });
-      const root = funnel(tree, {files:['package.json']})
+      const root = funnel(tree, { files:['package.json'] })
       return merge([root, webroot, this._treeForFastBootServer()].filter(Boolean));
     }
 
