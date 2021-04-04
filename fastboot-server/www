@@ -4,7 +4,7 @@
 
 const path = require('path');
 
-const ClusterMaster = require('ember-alt-fastboot-app-server/src/backing-classes/cluster-master');
+const FastBootServer = require('ember-alt-fastboot-app-server/src/backing-classes/cluster-master');
 
 const config = {
   distPath: path.join(__dirname, '../'),
@@ -18,6 +18,6 @@ const config = {
   }
 };
 
-const master = new ClusterMaster(config);
+const master = new FastBootServer(config);
 
 master.start();
