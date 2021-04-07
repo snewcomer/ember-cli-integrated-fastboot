@@ -1,6 +1,6 @@
 {
   "name": "ember-cli-integrated-fastboot",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Addon that enables using a production FastBoot server during development.",
   "keywords": [
     "ember-addon"
