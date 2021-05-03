@@ -4,7 +4,7 @@
 
 const path = require('path');
 
-const FastBootServer = require('ember-alt-fastboot-app-server/src/backing-classes/cluster-master');
+const FastBootServer = require('ember-alt-fastboot-app-server/src/backing-classes/fastboot-server');
 
 const config = {
   distPath: path.join(__dirname, '../'),
